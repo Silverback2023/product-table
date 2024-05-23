@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Table</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            cursor: pointer;
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="sortTable('name')">Sort by Name</button>
+    <button onclick="sortTable('price')">Sort by Price</button>
+    <button onclick="sortTable('description')">Sort by Description</button>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        const products = [
+            {
+                "id": 1,
+                "name": "Apple",
+                "category": "Fruits",
+                "price": 0.5,
+                "inStock": true,
+                "description": "A crisp, sweet red apple.",
+                "nutrition": {
+                    "calories": 52,
+                    "fat": 0.2,
+                    "carbohydrates": 14,
+                    "protein": 0.3
+                }
+            },
+            {
+                "id": 2,
+                "name": "Banana",
+                "category": "Fruits",
+                "price": 0.3,
+                "inStock": true,
+                "description": "A ripe, yellow banana.",
+                "nutrition": {
+                    "calories": 89,
+                    "fat": 0.3,
+                    "carbohydrates": 23,
+                    "protein": 1.1
+                }
+            },
+            {
+                "id": 3,
+                "name": "Carrot",
+                "category": "Vegetables",
+                "price": 0.2,
+                "inStock": true,
+                "description": "A fresh, crunchy carrot.",
+                "nutrition": {
+                    "calories": 41,
+                    "fat": 0.2,
+                    "carbohydrates": 10,
+                    "protein": 0.9
+                }
+            },
+            {
+                "id": 4,
+                "name": "Bread",
+                "category": "Bakery",
+                "price": 2.5,
+                "inStock": true,
+                "description": "A loaf of freshly baked bread.",
+                "nutrition": {
+                    "calories": 265,
+                    "fat": 3.2,
+                    "carbohydrates": 49,
+                    "protein": 9
+                }
+            }
+        ];
+
+        function loadTableData(products) {
+            const tableBody = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                let row = tableBody.insertRow();
+                row.insertCell(0).innerText = product.name;
+                row.insertCell(1).innerText = product.price;
+                row.insertCell(2).innerText = product.description;
+            });
+        }
+
+        function sortTable(criteria) {
+            products.sort((a, b) => {
+                if (criteria === 'price') {
+                    return a.price - b.price;
+                } else {
+                    return a[criteria].localeCompare(b[criteria]);
+                }
+            });
+            loadTableData(products);
+        }
+
+        // Initial load
+        loadTableData(products);
+    </script>
+</body>
+</html>
